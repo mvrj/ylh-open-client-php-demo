@@ -27,7 +27,7 @@ if (!empty($_POST['WIDout_trade_no'])&& trim($_POST['WIDout_trade_no'])!=""){
     try{
         $result=$oauth_client->sendAnResourceRequest([
             'client_id' => $config['client_id'],
-            'access_token' => $access_token,
+            'access_token' => $_POST['token'],
             'timestamp' => (string)time(),
             'buyer_mobile' => $buyer_mobile,
             'out_trade_no' => $out_trade_no,
@@ -224,6 +224,14 @@ if (!empty($_POST['WIDout_trade_no'])&& trim($_POST['WIDout_trade_no'])!=""){
                     <input id="WIDbody" name="WIDbody" />
                 </dd>
                 <hr class="one_line">
+                <dt>商户token：</dt>
+                <dd>
+                    <input id="token" name="token" />
+                </dd>
+                <hr class="one_line">
+                <dd>
+                    <span style="line-height: 28px; color:red;">注意：实际业务中商户token应妥善保管，一般是从数据库中存取</span>
+                </dd>
                 <dt></dt>
                 <dd id="btn-dd">
                         <span class="new-btn-login-sp">

@@ -7,9 +7,6 @@
  */
 
 
-//该token是会员token,需要授权得到，实际应用中，应该从数据库中读取
-$access_token = '{access_token}';
-
 //根据配置修改相应信息
 $config = [
     //应用ID

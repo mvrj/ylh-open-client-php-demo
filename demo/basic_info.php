@@ -18,7 +18,7 @@ if (!empty($_POST['token'])&& trim($_POST['token'])!=""){
     try{
         $result=$oauth_client->sendAnResourceRequest([
             'client_id' => $config['client_id'],
-            'access_token' => $access_token,
+            'access_token' => $_POST['token'],
             'timestamp' => (string)time(),
         ],'api/v2/getUserInfo');
         echo "获取成功<br />member_id：".$result['member_id']
