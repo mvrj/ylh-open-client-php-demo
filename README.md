@@ -28,9 +28,9 @@ $config = [
     //异步通知地址
     'notify_url' => 'https://example.com/notify_url.php',
     //云联惠API网关
-    'gatewayUrl' => "https://openapidev.yunlianhui.com", //沙箱环境openapi 正式环境 openapidev
+    'gatewayUrl' => "https://openapidev.yunlianhui.com", //沙箱环境openapidev 正式环境 openapi
     //云联惠开放平台收银台
-    'gatewayPay' => "http://openpaydev.yunlianhui.com",//沙箱环境openpay 正式环境 openpaydev
+    'gatewayPay' => "http://openpaydev.yunlianhui.com",//沙箱环境openpaydev 正式环境 openpay
     //云联惠公钥
     'yunlianhui_public_key' => "{yunlianhui_public_key}",
 
