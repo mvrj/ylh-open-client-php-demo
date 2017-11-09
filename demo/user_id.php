@@ -23,7 +23,7 @@ if (!empty($_POST['token'])&& trim($_POST['token'])!=""){
             'access_token' => $access_token,
             'timestamp' => (string)time(),
         ],'api/v2/getUserId');
-        echo "获取成功<br />user_id：".$result['data']['user_id'];
+        echo "获取成功<br />user_id：".$result['user_id'];
     }catch (\YunLianHui\ApiException $exception){
         print_r('接口请求失败<br> '.'错误信息是:'.$exception->getMessage());
     }

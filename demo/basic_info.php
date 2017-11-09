@@ -21,12 +21,12 @@ if (!empty($_POST['token'])&& trim($_POST['token'])!=""){
             'access_token' => $access_token,
             'timestamp' => (string)time(),
         ],'api/v2/getUserInfo');
-        echo "获取成功<br />member_id：".$result['data']['member_id']
-        ."<br />member_class：".$result['data']['member_class']
-        ."<br />member_type：".$result['data']['member_type']
-        ."<br />mobile：".$result['data']['mobile']
-        ."<br />rcm_id：".$result['data']['rcm_id']
-            ."<br />email：".$result['data']['email'];
+        echo "获取成功<br />member_id：".$result['member_id']
+        ."<br />member_class：".$result['member_class']
+        ."<br />member_type：".$result['member_type']
+        ."<br />mobile：".$result['mobile']
+        ."<br />rcm_id：".$result['rcm_id']
+            ."<br />email：".$result['email'];
     }catch (\YunLianHui\ApiException $exception){
         print_r('接口请求失败<br> '.'错误信息是:'.$exception->getMessage());
     }
