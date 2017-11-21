@@ -14,7 +14,7 @@ use YunLianHui\OAuth2;
 if (!empty($_POST['scope'])&& trim($_POST['scope'])!=""){
 
     $oauth_client = new OAuth2($config['gatewayUrl'],$config['client_id'],$config['client_secret'],$config['client_private_key'],$config['redirect_uri']);
-    header('Location: '.$oauth_client->getAuthorizationUrl($config['redirect_uri'],'basic_info'));
+    header('Location: '.$oauth_client->getAuthorizationUrl($config['redirect_uri'],$_POST['scope']));
 
 
     return ;
@@ -167,11 +167,11 @@ if (!empty($_POST['scope'])&& trim($_POST['scope'])!=""){
     <form name=alipayment action='' method=post target="_blank">
         <div id="body" style="clear:left">
             <dl class="content">
-                <p>填写授权信息，默认basic_info</p>
+                <p>填写授权信息，通常填写basic_info</p>
                 <dt>scope
                     ：</dt>
                 <dd>
-                    <input id="scope" name="scope" />
+                    <input id="scope" name="scope" value="basic_info" />
                 </dd>
                 <hr class="one_line">
                 <dd>
@@ -190,10 +190,5 @@ if (!empty($_POST['scope'])&& trim($_POST['scope'])!=""){
 
 </div>
 </body>
-<script language="javascript">
-    function GetDateNow() {
-        document.getElementById("scope").value = "basic_info";
-    }
-    GetDateNow();
-</script>
+
 </html>

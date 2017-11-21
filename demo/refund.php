@@ -1,7 +1,49 @@
+<?php
+/* *
+ * 功能：云联惠支付接口 接口调试入口页面
+ * 说明：
+ * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ 请确保项目文件有可写权限，不然打印不了日志。
+ */
+require '../vendor/autoload.php';
+require_once 'config.php';
+
+use YunLianHui\OAuth2;
+
+if (!empty($_POST['order_id'])&& trim($_POST['order_id'])!=""
+
+&& (!empty($_POST['token'])&& trim($_POST['token'])!="")
+){
+
+    $oauth_client = new OAuth2($config['gatewayUrl'],$config['client_id'],$config['client_secret'],$config['client_private_key'],$config['redirect_uri']);
+
+    try{
+        $result=$oauth_client->sendAnResourceRequest([
+            'client_id' => $config['client_id'],
+            'access_token' => $_POST['token'],
+            'timestamp' => (string)time(),
+            'order_id' => $_POST['order_id'],
+            'refund_amount' => $_POST['refund_amount'],
+            'refund_reason' => $_POST['refund_reason'],
+        ],'api/v2/refund');
+
+        $flag = $result['success'] ? '成功' : '失败';
+
+        echo "退货成功<br />订单号：".$result['order_id']."<br />退款金额 ：".$result['refund_amount']
+            ."<br />是否退款成功：".$flag;
+    }catch (\YunLianHui\ApiException $exception){
+
+        print_r('接口请求失败<br> '.'错误信息是:'.$exception->getMessage());
+    }
+
+
+    return ;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>云联惠开放平台接口</title>
+    <title>云联惠开放平台支付接口</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
         *{
@@ -139,57 +181,50 @@
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
-    <h1>云联惠开放平台接口</h1>
+    <h1>进行退货</h1>
 </header>
 <div id="main">
-    <div id="body" style="clear:left">
-        <dl class="content">
-            <dt></dt>
-            <dd id="btn-dd">
+    <form name=alipayment action='' method=post target="_blank">
+        <div id="body" style="clear:left">
+            <dl class="content">
+                <dt>订单号
+                    ：</dt>
+                <dd>
+                    <input id="order_id" name="order_id" />
+                </dd>
+                <hr class="one_line">
+                <dt>退款金额(分)
+                    ：</dt>
+                <dd>
+                    <input id="refund_amount" name="refund_amount" />
+                </dd>
+                <hr class="one_line">
+                <dt>退款理由
+                    ：</dt>
+                <dd>
+                    <input id="refund_reason" name="refund_reason" />
+                </dd>
+                <hr class="one_line">
+                <dt>商户token：</dt>
+                <dd>
+                    <input id="token" name="token" />
+                </dd>
+                <hr class="one_line">
+                <dd>
+                    <span style="line-height: 28px; color:red;">注意：实际业务中商户token应妥善保管，一般是从数据库中存取</span>
+                </dd>
+                <dt></dt>
+                <dd id="btn-dd">
                         <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/auth.php')">发起授权</button>
+                            <button class="new-btn-login" type="submit" style="text-align:center;">确 认</button>
                         </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/token.php')">code换取token</button>
-                        </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/user_id.php')">查询会员user_id</button>
-                        </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/basic_info.php')">查询会员基本信息</button>
-                        </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/register.php')">主动注册临时会员</button>
-                        </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/returnPoints.php')">产生全返订单</button>
-                        </span>
-            </dd>
-            <dt></dt>
-            <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" style="text-align:center;" onclick="window.open('./demo/refund.php')">进行退货</button>
-                        </span>
-            </dd>
-            <dt></dt>
-        </dl>
-    </div>
+                    <span class="note-help">如果您点击“确认”按钮，即表示您同意该次的执行操作。</span>
+                </dd>
+            </dl>
+        </div>
+    </form>
 
 </div>
 </body>
+
 </html>
